@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card-bg: rgba(15, 23, 42, 0.6);
+  --card-border: rgba(255, 255, 255, 0.06);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+}
+
+.glass-glow {
+  position: relative;
+}
+
+.glass-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Drishti blind-assist Mode styling overrides */
+.drishti-mode {
+  --background: #000000 !important;
+  --foreground: #ffff00 !important; /* Yellow text on black is AAA standard for visibility */
+  --card-bg: #000000 !important;
+  --card-border: #ffff00 !important;
+}
+
+.drishti-mode button,
+.drishti-mode input,
+.drishti-mode select {
+  font-size: 1.25rem !important;
+  border: 2px solid #ffff00 !important;
+  color: #ffff00 !important;
+  background-color: #000000 !important;
+  min-height: 56px !important;
+}
+
+/* Jarvis Waveform Animation */
+@keyframes wave {
+  0%, 100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1.0);
+  }
+}
+
+.voice-bar {
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+.voice-bar:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.voice-bar:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.voice-bar:nth-child(4) {
+  animation-delay: 0.45s;
+}
+
+.voice-bar:nth-child(5) {
+  animation-delay: 0.6s;
+}
+
+/* Sugamya Mode Avatar pulsation */
+@keyframes avatar-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(249, 115, 22, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
+  }
+}
+
+.avatar-active {
+  animation: avatar-pulse 2s infinite;
+}
