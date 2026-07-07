@@ -6,9 +6,9 @@
         },
         "backend": {
             "root": "backend",
-            "framework": "none",
-            "runtime": "nodejs18.x",
-            "entrypoint": "src/server.ts"
+            "framework": "express",
+            "buildCommand": "npm run build",
+            "entrypoint": "dist/server.js"
         }
     },
     "rewrites": [
