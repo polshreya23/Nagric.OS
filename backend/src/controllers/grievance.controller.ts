@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { GeminiService } from '../services/gemini.service';
 
 const prisma = new PrismaClient();
@@ -51,7 +51,7 @@ export class GrievanceController {
         where: {
           category: aiResult.category,
           status: {
-            in: [Prisma.GrievanceStatus.REPORTED, Prisma.GrievanceStatus.VERIFIED, Prisma.GrievanceStatus.ASSIGNED, Prisma.GrievanceStatus.IN_PROGRESS]
+            in: ['REPORTED', 'VERIFIED', 'ASSIGNED', 'IN_PROGRESS']
           },
           latitude: {
             gte: latVal - duplicateWindow,
@@ -75,7 +75,7 @@ export class GrievanceController {
             latitude: latVal,
             longitude: lngVal,
             formattedAddress,
-            status: Prisma.GrievanceStatus.DUPLICATE,
+            status: 'DUPLICATE',
             priorityScore: 0.0, // Duplicate issues get lowest action priority
             sentimentScore: 0.0
           }
@@ -117,7 +117,7 @@ export class GrievanceController {
           latitude: latVal,
           longitude: lngVal,
           formattedAddress,
-          status: Prisma.GrievanceStatus.VERIFIED,
+          status: 'VERIFIED',
           priorityScore,
           sentimentScore: 0.5 // Standard initial sentiment
         }
@@ -167,7 +167,7 @@ export class GrievanceController {
       const tasks = await prisma.grievance.findMany({
         where: {
           status: {
-            in: [Prisma.GrievanceStatus.VERIFIED, Prisma.GrievanceStatus.ASSIGNED, Prisma.GrievanceStatus.IN_PROGRESS]
+            in: ['VERIFIED', 'ASSIGNED', 'IN_PROGRESS']
           }
         }
       });
